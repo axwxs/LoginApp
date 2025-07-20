@@ -1,0 +1,14 @@
+<resources>
+    <!-- Existing strings -->
+    <string name="app_name">LoginApp</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="invalid_credentials">Invalid credentials!</string>
+    <string name="demo_username">admin</string>
+    <string name="demo_password">1234</string>
+
+    <!-- New strings -->
+    <string name="update_credentials_title">Update Credentials</string>
+    <string name="view_data_title">View Saved Data</string>
+</resources>

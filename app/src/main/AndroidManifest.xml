@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.loginapp">
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.LoginApp">
+
+        <!-- Main Login Activity (LAUNCHER) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Update Credentials Activity -->
+        <activity
+            android:name=".UpdateCredentialsActivity"
+            android:exported="false"
+            android:label="@string/update_credentials_title" />
+
+        <!-- View Data Activity -->
+        <activity
+            android:name=".ViewDataActivity"
+            android:exported="false"
+            android:label="@string/view_data_title" />
+    </application>
+</manifest>
