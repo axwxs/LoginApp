@@ -1,5 +1,4 @@
 package com.example.loginapp;
-import com.example.loginapp.utils.SecureStorageHelper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,10 +41,15 @@ public class ViewCredentialsActivity extends AppCompatActivity {
         try {
             String usersJson = sharedPreferences.getString("users", "{}");
             org.json.JSONObject usersObj = new org.json.JSONObject(usersJson);
-            String passwordEnc = usersObj.optString(currentUser, "");
-            String password = passwordEnc.isEmpty() ? "Not set" : SecureStorageHelper.decrypt(passwordEnc);
+            if (!usersObj.has(currentUser)) {
+                tvUsername.setText("Username: " + currentUser);
+                tvPassword.setText("Password: Not set");
+                return;
+            }
+            org.json.JSONObject credObj = usersObj.getJSONObject(currentUser);
+            String hash = credObj.optString("hash", "Not set");
             tvUsername.setText("Username: " + currentUser);
-            tvPassword.setText("Password: " + password);
+            tvPassword.setText("Password Hash: " + hash);
         } catch (Exception e) {
             e.printStackTrace();
             tvUsername.setText("Username: Error");
@@ -53,4 +57,3 @@ public class ViewCredentialsActivity extends AppCompatActivity {
         }
     }
 }
-

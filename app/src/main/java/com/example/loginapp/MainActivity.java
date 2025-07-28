@@ -13,6 +13,7 @@ import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import org.json.JSONObject;
 import java.util.concurrent.Executor;
+import com.example.loginapp.utils.PasswordUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -117,9 +118,10 @@ public class MainActivity extends AppCompatActivity {
             String usersJson = sharedPreferences.getString("users", "{}");
             JSONObject usersObj = new JSONObject(usersJson);
             if (!usersObj.has(username)) return false;
-            String savedPasswordEnc = usersObj.getString(username);
-            String savedPassword = com.example.loginapp.utils.SecureStorageHelper.decrypt(savedPasswordEnc);
-            return password.equals(savedPassword);
+            JSONObject credObj = usersObj.getJSONObject(username);
+            String salt = credObj.getString("salt");
+            String hash = credObj.getString("hash");
+            return PasswordUtils.verifyPassword(password, salt, hash);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
