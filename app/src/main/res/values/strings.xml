@@ -11,4 +11,5 @@
     <!-- New strings -->
     <string name="update_credentials_title">Update Credentials</string>
     <string name="view_data_title">View Saved Data</string>
+    <string name="register_button">Register</string>
 </resources>

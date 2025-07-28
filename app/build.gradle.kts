@@ -40,5 +40,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("androidx.biometric:biometric:1.2.0-alpha04")
+    implementation(libs.biometric)
+    implementation(libs.security.crypto)
 }

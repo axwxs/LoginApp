@@ -3,6 +3,7 @@ package com.example.loginapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
+import org.json.JSONObject;
 import java.util.concurrent.Executor;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private Button btnRegister;
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
         // Initialize biometric authentication
         executor = ContextCompat.getMainExecutor(this);
@@ -70,12 +74,22 @@ public class MainActivity extends AppCompatActivity {
                 // If both fields are empty, launch biometric prompt
                 checkBiometricAndAuthenticate();
             } else if (validateCredentials(username, password)) {
-                // If credentials are valid, launch biometric prompt
+                // If credentials are valid, save current user and launch biometric prompt
+                getSharedPreferences("LoginAppPrefs", MODE_PRIVATE)
+                    .edit().putString("current_user", username).apply();
                 checkBiometricAndAuthenticate();
             } else {
+                // Log what was entered for debugging
+                 Log.d("MainActivity", "Entered Username: " + username + ", Entered Password: " + password);
+
                 // If credentials are invalid, show error
                 Toast.makeText(this, getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show();
             }
+        });
+
+        // Set click listener for register button
+        btnRegister.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
         });
     }
 
@@ -98,9 +112,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validateCredentials(String username, String password) {
-        SharedPreferences sharedPreferences = getSharedPreferences("LoginAppPrefs", MODE_PRIVATE);
-        String savedUsername = sharedPreferences.getString("username", getString(R.string.demo_username));
-        String savedPassword = sharedPreferences.getString("password", getString(R.string.demo_password));
-        return username.equals(savedUsername) && password.equals(savedPassword);
+        try {
+            SharedPreferences sharedPreferences = getSharedPreferences("LoginAppPrefs", MODE_PRIVATE);
+            String usersJson = sharedPreferences.getString("users", "{}");
+            JSONObject usersObj = new JSONObject(usersJson);
+            if (!usersObj.has(username)) return false;
+            String savedPasswordEnc = usersObj.getString(username);
+            String savedPassword = com.example.loginapp.utils.SecureStorageHelper.decrypt(savedPasswordEnc);
+            return password.equals(savedPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
