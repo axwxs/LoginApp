@@ -3,6 +3,7 @@
     package="com.example.loginapp">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -34,5 +35,17 @@
             android:name=".ViewDataActivity"
             android:exported="false"
             android:label="@string/view_data_title" />
+
+        <!-- Register Activity -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:label="@string/register_button" />
+
+        <!-- View Credentials Activity -->
+        <activity
+            android:name=".ViewCredentialsActivity"
+            android:exported="false"
+            android:label="View Credentials" />
     </application>
 </manifest>
