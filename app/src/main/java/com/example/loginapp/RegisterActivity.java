@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.loginapp.utils.SecureStorageHelper;
+import com.example.loginapp.utils.PasswordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +44,12 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, "Username already exists!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            usersObj.put(username, SecureStorageHelper.encrypt(password));
+            String salt = PasswordUtils.generateSalt();
+            String hash = PasswordUtils.hashPassword(password, salt);
+            JSONObject credObj = new JSONObject();
+            credObj.put("salt", salt);
+            credObj.put("hash", hash);
+            usersObj.put(username, credObj);
             sharedPreferences.edit().putString("users", usersObj.toString()).apply();
             Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
