@@ -40,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             String usersJson = sharedPreferences.getString("users", "{}");
             JSONObject usersObj = new JSONObject(usersJson);
+            String encUsername = com.example.loginapp.utils.SecureStorageHelper.encrypt(username);
             if (usersObj.has(username)) {
                 Toast.makeText(this, "Username already exists!", Toast.LENGTH_SHORT).show();
                 return;
@@ -50,7 +51,9 @@ public class RegisterActivity extends AppCompatActivity {
             credObj.put("salt", salt);
             credObj.put("hash", hash);
             usersObj.put(username, credObj);
-            sharedPreferences.edit().putString("users", usersObj.toString()).apply();
+            sharedPreferences.edit().putString("users", usersObj.toString())
+                .putString("current_user", encUsername)
+                .apply();
             Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
             finish();

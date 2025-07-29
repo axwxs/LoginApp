@@ -76,8 +76,21 @@ public class MainActivity extends AppCompatActivity {
                 checkBiometricAndAuthenticate();
             } else if (validateCredentials(username, password)) {
                 // If credentials are valid, save current user and launch biometric prompt
-                getSharedPreferences("LoginAppPrefs", MODE_PRIVATE)
-                    .edit().putString("current_user", username).apply();
+                long loginTime = System.currentTimeMillis();
+                long sessionDuration = 30 * 60 * 1000; // Session is gonna be valid for 30 mins
+                try {
+                    String encUsername = com.example.loginapp.utils.SecureStorageHelper.encrypt(username);
+                    String encSessionStart = com.example.loginapp.utils.SecureStorageHelper.encrypt(Long.toString(loginTime));
+                    String encSessionExpiry = com.example.loginapp.utils.SecureStorageHelper.encrypt(Long.toString(loginTime + sessionDuration));
+                    SharedPreferences.Editor editor = getSharedPreferences("LoginAppPrefs", MODE_PRIVATE).edit();
+                    editor.putString("current_user", encUsername);
+                    editor.putString("session_start", encSessionStart);
+                    editor.putString("session_expiry", encSessionExpiry);
+                    editor.apply();
+                } catch (Exception e) {
+                    Toast.makeText(this, "Error encrypting session info", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 checkBiometricAndAuthenticate();
             } else {
                 // Log what was entered for debugging

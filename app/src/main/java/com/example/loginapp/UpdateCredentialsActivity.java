@@ -20,6 +20,13 @@ public class UpdateCredentialsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
+        sharedPreferences = getSharedPreferences("LoginAppPrefs", MODE_PRIVATE);
+        if (!isSessionValid()) {
+            Toast.makeText(this, "Session expired. Please log in again.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return;
+        }
         etNewUsername = findViewById(R.id.etNewUsername);
         etNewPassword = findViewById(R.id.etNewPassword);
         etData = findViewById(R.id.etData);
@@ -29,8 +36,6 @@ public class UpdateCredentialsActivity extends AppCompatActivity {
         btnSaveData = findViewById(R.id.btnSaveData);
         btnViewCredentials = findViewById(R.id.btnViewCredentials);
 
-        sharedPreferences = getSharedPreferences("LoginAppPrefs", MODE_PRIVATE);
-
         btnSave.setOnClickListener(v -> saveCredentials());
         btnSaveData.setOnClickListener(v -> saveData());
         btnViewData.setOnClickListener(v -> viewData());
@@ -38,16 +43,31 @@ public class UpdateCredentialsActivity extends AppCompatActivity {
         btnViewCredentials.setOnClickListener(v -> viewCredentials());
     }
 
+    private boolean isSessionValid() {
+        try {
+            long now = System.currentTimeMillis();
+            String encExpiry = sharedPreferences.getString("session_expiry", null);
+            String encUser = sharedPreferences.getString("current_user", null);
+            if (encExpiry == null || encUser == null) return false;
+            String decUser = com.example.loginapp.utils.SecureStorageHelper.decrypt(encUser);
+            long expiry = Long.parseLong(com.example.loginapp.utils.SecureStorageHelper.decrypt(encExpiry));
+            return decUser != null && now < expiry;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private void saveCredentials() {
         String newUsername = etNewUsername.getText().toString().trim();
         String newPassword = etNewPassword.getText().toString().trim();
         if (!newUsername.isEmpty() && !newPassword.isEmpty()) {
             try {
-                String currentUser = sharedPreferences.getString("current_user", null);
-                if (currentUser == null) {
+                String encCurrentUser = sharedPreferences.getString("current_user", null);
+                if (encCurrentUser == null) {
                     Toast.makeText(this, "No user logged in", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                String currentUser = com.example.loginapp.utils.SecureStorageHelper.decrypt(encCurrentUser);
                 String usersJson = sharedPreferences.getString("users", "{}");
                 JSONObject usersObj = new JSONObject(usersJson);
                 if (!currentUser.equals(newUsername) && usersObj.has(newUsername)) {
@@ -58,10 +78,10 @@ public class UpdateCredentialsActivity extends AppCompatActivity {
                 if (!currentUser.equals(newUsername)) {
                     usersObj.remove(currentUser);
                 }
-                usersObj.put(newUsername, SecureStorageHelper.encrypt(newPassword));
+                usersObj.put(newUsername, com.example.loginapp.utils.SecureStorageHelper.encrypt(newPassword));
                 sharedPreferences.edit()
                     .putString("users", usersObj.toString())
-                    .putString("current_user", newUsername)
+                    .putString("current_user", com.example.loginapp.utils.SecureStorageHelper.encrypt(newUsername))
                     .apply();
                 Toast.makeText(this, "Credentials saved!", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -76,12 +96,13 @@ public class UpdateCredentialsActivity extends AppCompatActivity {
 
     private void saveData() {
         String data = etData.getText().toString().trim();
-        String currentUser = sharedPreferences.getString("current_user", null);
-        if (currentUser == null) {
+        String encCurrentUser = sharedPreferences.getString("current_user", null);
+        if (encCurrentUser == null) {
             Toast.makeText(this, "No user logged in", Toast.LENGTH_SHORT).show();
             return;
         }
         try {
+            String currentUser = com.example.loginapp.utils.SecureStorageHelper.decrypt(encCurrentUser);
             SecureFileHelper.writeEncryptedFile(this, "user_data_" + currentUser + ".txt", data);
             Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
