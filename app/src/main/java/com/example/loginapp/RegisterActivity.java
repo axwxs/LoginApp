@@ -3,8 +3,10 @@ package com.example.loginapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.loginapp.utils.PasswordUtils;
@@ -12,9 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText etRegisterUsername, etRegisterPassword;
+    private EditText etRegisterUsername, etRegisterPassword, etRegisterPasswordConfirm;
     private Button btnRegisterSave;
     private SharedPreferences sharedPreferences;
+    private TextView tvRegisterError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +26,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         etRegisterUsername = findViewById(R.id.etRegisterUsername);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
+        etRegisterPasswordConfirm = findViewById(R.id.etRegisterPasswordConfirm);
         btnRegisterSave = findViewById(R.id.btnRegisterSave);
         sharedPreferences = getSharedPreferences("LoginAppPrefs", MODE_PRIVATE);
+        tvRegisterError = findViewById(R.id.tvRegisterError);
 
         btnRegisterSave.setOnClickListener(v -> registerUser());
     }
@@ -32,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser() {
         String username = etRegisterUsername.getText().toString().trim();
         String password = etRegisterPassword.getText().toString().trim();
+        String passwordConfirm = etRegisterPasswordConfirm.getText().toString().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Username and password cannot be empty", Toast.LENGTH_SHORT).show();
@@ -45,6 +51,27 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, "Username already exists!", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            // Minimum password strength check
+            if (password.length() < 8 || !password.matches(".*[A-Z].*") || !password.matches(".*[a-z].*") || !password.matches(".*[0-9].*") || !password.matches(".*[!@#$%^&*()_+=-].*")) {
+                Toast.makeText(this, "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.", Toast.LENGTH_LONG).show();
+                tvRegisterError.setText("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+                tvRegisterError.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            // Confirm password match
+            else if (!password.equals(passwordConfirm)) {
+                Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
+                tvRegisterError.setText("Passwords do not match!");
+                tvRegisterError.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            else {
+                tvRegisterError.setVisibility(View.GONE);
+            }
+
             String salt = PasswordUtils.generateSalt();
             String hash = PasswordUtils.hashPassword(password, salt);
             JSONObject credObj = new JSONObject();
