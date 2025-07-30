@@ -47,5 +47,11 @@
             android:name=".ViewCredentialsActivity"
             android:exported="false"
             android:label="View Credentials" />
+
+        <!-- Vault View Activity -->
+        <activity
+            android:name=".VaultViewActivity"
+            android:exported="false"
+            android:label="Vault" />
     </application>
 </manifest>

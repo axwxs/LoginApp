@@ -1,69 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <EditText
-        android:id="@+id/etNewUsername"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="New Username"/>
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etNewPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="New Password"
-        android:inputType="textPassword"/>
+        <EditText
+            android:id="@+id/etNewUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New Username"/>
 
-    <EditText
-        android:id="@+id/etData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter some data to save"
-        android:minLines="3"/>
+        <EditText
+            android:id="@+id/etNewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New Password"
+            android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Credentials"/>
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/btnViewCredentials"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Credentials" />
+        <!--  Conditional Error Message  -->
+        <TextView
+            android:id="@+id/tvPasswordError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            android:textSize="14sp"/>
 
-    <Button
-        android:id="@+id/btnSaveData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Data" />
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_marginVertical="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Credentials"/>
 
-    <Button
-        android:id="@+id/btnViewData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Data"/>
+        <!-- Usernames Section -->
+        <TextView android:text="Usernames" android:textStyle="bold" android:textSize="18sp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <EditText android:id="@+id/etAddUsername" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="Add Username"/>
+            <Button android:id="@+id/btnAddUsername" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add"/>
+        </LinearLayout>
 
-    <!--  Put button towards bottom -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical" />
+        <!-- Passwords Section -->
+        <TextView android:text="Passwords" android:textStyle="bold" android:textSize="18sp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <EditText android:id="@+id/etAddPassword" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="Add Password" android:inputType="textPassword"/>
+            <Button android:id="@+id/btnAddPassword" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add"/>
+        </LinearLayout>
 
-    <Button
+        <!-- PINs Section -->
+        <TextView android:text="PIN Numbers" android:textStyle="bold" android:textSize="18sp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <EditText android:id="@+id/etAddPin" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="Add PIN" android:inputType="numberPassword"/>
+            <Button android:id="@+id/btnAddPin" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add"/>
+        </LinearLayout>
 
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="Logout"
-        android:backgroundTint="#FF0000"
-        />
+        <!-- Private Notes Section -->
+        <TextView android:text="Private Notes" android:textStyle="bold" android:textSize="18sp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <EditText android:id="@+id/etAddNote" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="Add Note"/>
+            <Button android:id="@+id/btnAddNote" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add"/>
+        </LinearLayout>
 
+
+
+        <!-- Vault View Button -->
+        <Button
+            android:id="@+id/btnViewVault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Vault" />
+
+        <!--  Puts button towards bottom -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" />
+
+        <!-- Logout Button -->
+        <Button
+            android:layout_gravity="bottom"
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:backgroundTint="#FF0000" />
 </LinearLayout>

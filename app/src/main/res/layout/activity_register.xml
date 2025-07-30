@@ -18,11 +18,27 @@
         android:layout_height="wrap_content"
         android:hint="@string/password_hint"
         android:inputType="textPassword"/>
+    <EditText
+        android:id="@+id/etRegisterPasswordConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/confirm_password_hint"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btnRegisterSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/register_button"/>
+
+    <!--  Conditional Error Message  -->
+    <TextView
+        android:id="@+id/tvRegisterError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        android:textSize="14sp"/>
 </LinearLayout>
 
