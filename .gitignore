@@ -17,3 +17,7 @@ local.properties
 # IDE
 .idea
 .vscode/
+
+# Post Build
+app-release.dm
+output-metadata.json
