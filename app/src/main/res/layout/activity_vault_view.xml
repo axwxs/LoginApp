@@ -8,23 +8,80 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView android:text="Usernames" android:textStyle="bold" android:textSize="18sp"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <ListView android:id="@+id/listUsernames" android:layout_width="match_parent" android:layout_height="120dp" android:dividerHeight="1dp"/>
+        <TextView
+            android:id="@+id/tvVaultPageWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vault_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingVertical="8dp"/>
 
-        <TextView android:text="Passwords" android:textStyle="bold" android:textSize="18sp"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <ListView android:id="@+id/listPasswords" android:layout_width="match_parent" android:layout_height="120dp" android:dividerHeight="1dp"/>
+        <TextView
+            android:id="@+id/tvVaultInstructionInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tap_an_entry_to_delete_it"
+            android:textStyle="italic"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:paddingVertical="2dp"/>
 
-        <TextView android:text="PIN Numbers" android:textStyle="bold" android:textSize="18sp"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <ListView android:id="@+id/listPins" android:layout_width="match_parent" android:layout_height="120dp" android:dividerHeight="1dp"/>
+        <TextView
+            android:text="Usernames"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <TextView android:text="Private Notes" android:textStyle="bold" android:textSize="18sp"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <ListView android:id="@+id/listNotes" android:layout_width="match_parent" android:layout_height="120dp" android:dividerHeight="1dp"/>
+        <ListView
+            android:id="@+id/listUsernames"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:dividerHeight="1dp"/>
+
+        <TextView android:text="Passwords"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ListView
+            android:id="@+id/listPasswords"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:dividerHeight="1dp"/>
+
+        <TextView
+            android:text="PIN Numbers"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ListView
+            android:id="@+id/listPins"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:dividerHeight="1dp"/>
+
+        <TextView
+            android:text="Private Notes"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ListView
+            android:id="@+id/listNotes"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:dividerHeight="1dp"/>
 
         <Button
+            android:layout_marginTop="14dp"
+
             android:id="@+id/btnBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

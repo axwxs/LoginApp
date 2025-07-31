@@ -30,23 +30,11 @@
             android:exported="false"
             android:label="@string/update_credentials_title" />
 
-        <!-- View Data Activity -->
-        <activity
-            android:name=".ViewDataActivity"
-            android:exported="false"
-            android:label="@string/view_data_title" />
-
         <!-- Register Activity -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
             android:label="@string/register_button" />
-
-        <!-- View Credentials Activity -->
-        <activity
-            android:name=".ViewCredentialsActivity"
-            android:exported="false"
-            android:label="View Credentials" />
 
         <!-- Vault View Activity -->
         <activity

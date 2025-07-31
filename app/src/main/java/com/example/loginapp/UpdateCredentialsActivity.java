@@ -75,7 +75,7 @@ public class UpdateCredentialsActivity extends AppCompatActivity {
         // Minimum password strength check
         if (newPassword.length() < 8 || !newPassword.matches(".*[A-Z].*") || !newPassword.matches(".*[a-z].*") || !newPassword.matches(".*[0-9].*") || !newPassword.matches(".*[!@#$%^&*()_+=-].*")) {
             Toast.makeText(this, "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.", Toast.LENGTH_LONG).show();
-            tvPasswordError.setText("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+            tvPasswordError.setText(R.string.password_must_be_at_least_8_characters_and_include_uppercase_lowercase_number_and_special_character);
             tvPasswordError.setVisibility(View.VISIBLE);
             return;
         }
@@ -83,7 +83,7 @@ public class UpdateCredentialsActivity extends AppCompatActivity {
         // Confirm password match
         else if (!newPassword.equals(passwordConfirm)) {
             Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
-            tvPasswordError.setText("Passwords do not match!");
+            tvPasswordError.setText(R.string.passwords_do_not_match);
             tvPasswordError.setVisibility(View.VISIBLE);
             return;
         }
@@ -176,14 +176,12 @@ public class UpdateCredentialsActivity extends AppCompatActivity {
         }
     }
 
-
-    private void viewCredentials() {
-        startActivity(new Intent(this, ViewCredentialsActivity.class));
-    }
-
-
-
     private void logout() {
+        sharedPreferences.edit().remove("current_user")
+            .remove("session_start")
+            .remove("session_expiry")
+            .apply();
+
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

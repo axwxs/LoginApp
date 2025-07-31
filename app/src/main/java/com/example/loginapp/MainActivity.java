@@ -3,7 +3,6 @@ package com.example.loginapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -93,9 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 checkBiometricAndAuthenticate();
             } else {
-                // Log what was entered for debugging
-                 Log.d("MainActivity", "Entered Username: " + username + ", Entered Password: " + password);
-
                 // If credentials are invalid, show error
                 Toast.makeText(this, getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show();
             }

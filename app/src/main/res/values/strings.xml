@@ -1,11 +1,22 @@
 <resources>
-    <string name="app_name">LoginApp</string>
+    <string name="app_name">Login App</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="confirm_password_hint">Confirm Password</string>
     <string name="login_button">Login</string>
     <string name="invalid_credentials">Invalid credentials!</string>
     <string name="update_credentials_title">Update Credentials</string>
-    <string name="view_data_title">View Saved Data</string>
     <string name="register_button">Register</string>
+    <string name="tap_an_entry_to_delete_it">Tap an entry to delete it</string>
+    <string name="vault_title"><u>Your Vault</u></string>
+    <string name="update_user_data"><u>Update User Data</u></string>
+    <string name="credentials"><u>Credentials</u></string>
+    <string name="usernames"><u>Usernames</u></string>
+    <string name="passwords"><u>Passwords</u></string>
+    <string name="pin_numbers"><u>PIN Numbers</u></string>
+    <string name="private_notes"><u>Private Notes</u></string>
+    <string name="password_must_be_at_least_8_characters_and_include_uppercase_lowercase_number_and_special_character">
+        <![CDATA[Password must be at least 8 characters and include uppercase & lowercase letters, a number, and one of the following special characters: !@#$%^&*()_+=- ]]>
+    </string>
+    <string name="passwords_do_not_match">Passwords do not match!</string>
 </resources>

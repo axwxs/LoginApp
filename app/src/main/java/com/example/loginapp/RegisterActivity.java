@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
             // Minimum password strength check
             if (password.length() < 8 || !password.matches(".*[A-Z].*") || !password.matches(".*[a-z].*") || !password.matches(".*[0-9].*") || !password.matches(".*[!@#$%^&*()_+=-].*")) {
                 Toast.makeText(this, "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.", Toast.LENGTH_LONG).show();
-                tvRegisterError.setText("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+                tvRegisterError.setText(R.string.password_must_be_at_least_8_characters_and_include_uppercase_lowercase_number_and_special_character);
                 tvRegisterError.setVisibility(View.VISIBLE);
                 return;
             }
@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
             // Confirm password match
             else if (!password.equals(passwordConfirm)) {
                 Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
-                tvRegisterError.setText("Passwords do not match!");
+                tvRegisterError.setText(R.string.passwords_do_not_match);
                 tvRegisterError.setVisibility(View.VISIBLE);
                 return;
             }
